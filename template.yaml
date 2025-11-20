@@ -1,0 +1,48 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: group-prefix-exclude-sample
+  title: Group Prefix Exclude Sample
+  description: Group Entityの参照からプレフィックスを除外して利用するサンプル
+  tags:
+    - recommended
+    - demo
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: グループ情報の入力
+      required:
+        - owner
+      properties:
+        owner:
+          title: Owner
+          type: string
+          description: 所有者グループを選択してください
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+
+  steps:
+    # ステップ1: 選択された値と加工後の値をログに出力して確認
+    - id: log-results
+      name: Log Extracted Values
+      action: debug:log
+      input:
+        message: |
+          ==== 結果確認 ====
+          選択された生の値 (Raw Value): ${{ parameters.owner }}
+          
+          加工後の値 (Processed): ${{ parameters.owner | parseEntityRef | pick('name') }}
+          ==================
+
+    # ステップ2: 実際の利用イメージ
+    - id: use-value
+      name: Example Usage
+      action: debug:log
+      input:
+        message: >
+          グループ名 "${{ parameters.owner | parseEntityRef | pick('name') }}" を使ってリソースを作成します...
+
