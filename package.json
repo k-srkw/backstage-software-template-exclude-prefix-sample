@@ -1,0 +1,30 @@
+{
+  "name": "backstage-software-template-exclude-prefix-sample",
+  "version": "1.0.0",
+  "description": "Backstage Software Template with ATDD environment",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
+    "test:watch": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --watch --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
+    "test:debug": "PWDEBUG=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
+    "test:headed": "HEADED=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'"
+  },
+  "keywords": [
+    "backstage",
+    "template",
+    "atdd",
+    "cucumber",
+    "playwright"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "@cucumber/gherkin": "^29.0.0",
+    "@cucumber/messages": "^24.0.0",
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
