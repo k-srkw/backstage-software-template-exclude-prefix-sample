@@ -44,7 +44,7 @@ npm run test:headed
 
 ## プロジェクト構造
 
-```
+```text
 .
 ├── features/                        # Gherkin ファイル（.feature）
 │   ├── example.feature             # サンプルテスト
@@ -121,7 +121,7 @@ Given('ブラウザが起動している', async function (this: CustomWorld) {
 ### 必須の環境変数
 
 | 変数名 | 説明 | デフォルト値 |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `BASE_URL` | Backstage のベース URL | `http://localhost:3000` |
 | `BACKSTAGE_USERNAME` | Backstage ログイン用ユーザー名 | `user` |
 | `BACKSTAGE_PASSWORD` | Backstage ログイン用パスワード | `password` |
@@ -129,7 +129,7 @@ Given('ブラウザが起動している', async function (this: CustomWorld) {
 ### オプションの環境変数
 
 | 変数名 | 説明 | デフォルト値 |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `HEADED` | `1` に設定するとブラウザを表示 | `0`（ヘッドレス） |
 | `CI` | CI 環境で実行する場合に設定 | - |
 
