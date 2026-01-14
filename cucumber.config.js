@@ -4,10 +4,7 @@
  */
 export default {
   default: {
-    require: [
-      'step_definitions/**/*.ts',
-      'support/**/*.ts'
-    ],
+    // import/require は package.json の --import フラグで指定するため、ここでは省略
     format: [
       'progress-bar',
       'json:reports/cucumber-report.json',

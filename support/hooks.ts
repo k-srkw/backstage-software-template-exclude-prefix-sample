@@ -24,15 +24,23 @@ Before(async function (this: CustomWorld) {
  * 各シナリオの後処理
  */
 After(async function (this: CustomWorld, scenario) {
-  // 失敗時にスクリーンショットを撮影
-  if (scenario.result?.status === 'FAILED') {
-    const scenarioName = scenario.pickle.name.replace(/\s+/g, '_').toLowerCase();
-    await this.takeScreenshot(`failed_${scenarioName}`);
+  try {
+    // 失敗時にスクリーンショットを撮影
+    if (scenario.result?.status === 'FAILED') {
+      const scenarioName = scenario.pickle.name.replace(/\s+/g, '_').toLowerCase();
+      await this.takeScreenshot(`failed_${scenarioName}`).catch((error) => {
+        console.error('Failed to take screenshot:', error);
+      });
+    }
+  } finally {
+    // ブラウザを閉じる（スクリーンショットの成否に関わらず必ず実行）
+    try {
+      await this.closeBrowser();
+      console.log('Browser closed');
+    } catch (error) {
+      console.error('Failed to close browser:', error);
+    }
   }
-
-  // ブラウザを閉じる
-  await this.closeBrowser();
-  console.log('Browser closed');
 });
 
 /**

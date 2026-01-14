@@ -4,10 +4,12 @@
   "description": "Backstage Software Template with ATDD environment",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
-    "test:watch": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --watch --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
-    "test:debug": "PWDEBUG=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
-    "test:headed": "HEADED=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'"
+    "test": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts' --tags 'not @skip'",
+    "test:all": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts'",
+    "test:template": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts' features/template-execution.feature",
+    "test:watch": "NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts' --watch --tags 'not @skip'",
+    "test:debug": "PWDEBUG=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts' --tags 'not @skip'",
+    "test:headed": "HEADED=1 NODE_OPTIONS='--loader ts-node/esm' cucumber-js --import 'step_definitions/**/*.ts' --import 'support/**/*.ts' --tags 'not @skip'"
   },
   "keywords": [
     "backstage",

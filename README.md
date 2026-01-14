@@ -46,20 +46,45 @@ npm run test:headed
 
 ```
 .
-├── features/              # Gherkin ファイル（.feature）
-│   └── example.feature
-├── step_definitions/      # ステップ定義（TypeScript）
-│   └── example.steps.ts
-├── support/               # ヘルパー関数、フック、ページオブジェクト
-│   ├── hooks.ts          # Before/After フック
-│   ├── world.ts          # Cucumber World オブジェクトの拡張
-│   └── pages/            # ページオブジェクト（必要に応じて）
-├── reports/               # テストレポート出力先
-├── screenshots/           # 失敗時のスクリーンショット保存先
+├── features/                        # Gherkin ファイル（.feature）
+│   ├── example.feature             # サンプルテスト
+│   └── template-execution.feature  # テンプレート実行テスト
+├── step_definitions/                # ステップ定義（TypeScript）
+│   ├── example.steps.ts            # サンプルステップ定義
+│   └── template.steps.ts           # テンプレート実行ステップ定義
+├── support/                         # ヘルパー関数、フック、ページオブジェクト
+│   ├── hooks.ts                    # Before/After フック
+│   ├── world.ts                    # Cucumber World オブジェクトの拡張
+│   ├── auth.ts                     # 認証ヘルパー関数
+│   └── pages/                      # ページオブジェクト
+│       └── backstage-template-page.ts
+├── reports/                         # テストレポート出力先
+├── screenshots/                     # 失敗時のスクリーンショット保存先
+├── template.yaml                    # Backstage テンプレート定義
 ├── package.json
 ├── tsconfig.json
 ├── playwright.config.ts
 └── cucumber.config.js
+```
+
+## テストシナリオ
+
+### テンプレート実行テスト
+
+`features/template-execution.feature` には、Backstage Software Template の実行テストが定義されています：
+
+```gherkin
+Feature: Backstage Software Template Log Output Verification
+  Verify that logs are correctly output when executing Backstage Software Template
+
+  Background:
+    Given I am logged in to Backstage
+
+  Scenario: Execute template with group:default/admins as Owner parameter
+    Given I am on the template parameter input page
+    When I enter "group:default/admins" in the Owner field
+    And I execute the template
+    Then the log should contain "グループ名 \"admins\" を使ってリソースを作成します..."
 ```
 
 ## Gherkin ファイルの書き方
@@ -69,12 +94,11 @@ npm run test:headed
 例：
 
 ```gherkin
-# language: ja
-機能: テンプレートの動作確認
-  シナリオ: 基本的な動作
-    前提 ブラウザが起動している
-    もし "http://localhost:3000" にアクセスする
-    ならば ページが表示されること
+Feature: テンプレートの動作確認
+  Scenario: 基本的な動作
+    Given ブラウザが起動している
+    When "http://localhost:3000" にアクセスする
+    Then ページが表示されること
 ```
 
 ## ステップ定義の書き方
@@ -94,9 +118,30 @@ Given('ブラウザが起動している', async function (this: CustomWorld) {
 
 ## 環境変数
 
-- `BASE_URL`: テスト対象のベース URL（デフォルト: `http://localhost:3000`）
-- `HEADED`: `1` に設定するとブラウザを表示（デフォルト: ヘッドレス）
-- `CI`: CI 環境で実行する場合は設定
+### 必須の環境変数
+
+| 変数名 | 説明 | デフォルト値 |
+|--------|------|-------------|
+| `BASE_URL` | Backstage のベース URL | `http://localhost:3000` |
+| `BACKSTAGE_USERNAME` | Backstage ログイン用ユーザー名 | `user` |
+| `BACKSTAGE_PASSWORD` | Backstage ログイン用パスワード | `password` |
+
+### オプションの環境変数
+
+| 変数名 | 説明 | デフォルト値 |
+|--------|------|-------------|
+| `HEADED` | `1` に設定するとブラウザを表示 | `0`（ヘッドレス） |
+| `CI` | CI 環境で実行する場合に設定 | - |
+
+### 環境変数の設定例
+
+```bash
+# 環境変数を設定してテスト実行
+BASE_URL=https://your-backstage-instance.com \
+BACKSTAGE_USERNAME=your-username \
+BACKSTAGE_PASSWORD=your-password \
+npm test
+```
 
 ## テストレポート
 

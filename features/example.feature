@@ -1,13 +1,14 @@
-# language: ja
-機能: Backstage Software Template のサンプルテスト
+Feature: Backstage Software Template のサンプルテスト
   Backstage Software Template の基本的な動作を検証する
 
-  シナリオ: テンプレートの基本動作確認
-    前提 ブラウザが起動している
-    もし "http://localhost:3000" にアクセスする
-    ならば ページが表示されること
+  @skip
+  Scenario: Basic template operation check
+    Given ブラウザが起動している
+    When "http://localhost:3000" にアクセスする
+    Then ページが表示されること
 
-  シナリオ: ログ出力の確認
-    前提 テンプレートが実行されている
-    もし ログステップが実行される
-    ならば ログに結果が出力されること
+  @skip
+  Scenario: ログ出力の確認
+    Given テンプレートが実行されている
+    When ログステップが実行される
+    Then ログに結果が出力されること
